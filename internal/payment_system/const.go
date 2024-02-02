@@ -1,9 +1,9 @@
 package payment_system
 
 const (
-	SpecialStatus = "special"
-	BaseStatus    = "base"
+	SPECIAL_STATUS = "special"
+	BASE_STATUS    = "base"
 
-	EmissionName    = "emission"
-	DestructionName = "destruction"
+	EMISSION_NAME    = "emission"
+	DESTRUCTION_NAME = "destruction"
 )

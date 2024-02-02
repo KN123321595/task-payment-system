@@ -6,20 +6,20 @@ import (
 )
 
 const (
-	CountryCode = "BY"
-	BankCode    = "TEST"
-	BalanceCode = "1111"
+	COUNTRY_CODE = "BY"   //2-знаковый международный код страны
+	BANK_CODE    = "TEST" //4-знаковый код банка BIC
+	BALANCE_CODE = "1111" //4-знаковый номер балансового счета, по классификации счетов согласно утвержденным нормам бухгалтерского учета банков
 )
 
-// TODO генерация формата IBAN с контрольным числом
+// TODO: генерация формата IBAN с контрольным числом
 func GenerateIban() string {
 	builder := strings.Builder{}
-	builder.WriteString(CountryCode)
-	builder.WriteString("00") //контрольное число
-	builder.WriteString(BankCode)
-	builder.WriteString(BalanceCode)
+	builder.WriteString(COUNTRY_CODE)
+	builder.WriteString("00") //2-знаковое контрольное число
+	builder.WriteString(BANK_CODE)
+	builder.WriteString(BALANCE_CODE)
 
-	individualNumber := utils.GenerateRandomSequence(16)
+	individualNumber := utils.GenerateRandomNumberSequence(16)
 	builder.WriteString(individualNumber)
 
 	return builder.String()

@@ -17,8 +17,8 @@ func NewPaymentSystem() *PaymentSystem {
 		accounts: make(map[string]*Account),
 	}
 
-	ps.emissionAccount = ps.createAccount(EmissionName, SpecialStatus)
-	ps.destructionAccount = ps.createAccount(DestructionName, SpecialStatus)
+	ps.emissionAccount = ps.createAccount(EMISSION_NAME, SPECIAL_STATUS)
+	ps.destructionAccount = ps.createAccount(DESTRUCTION_NAME, SPECIAL_STATUS)
 
 	return ps
 }
@@ -41,6 +41,7 @@ func (ps *PaymentSystem) DestroyMoney(accountIban string, kopecks int) error {
 		return fmt.Errorf("not found account by iban")
 	}
 
+	//TODO: может ли быть баланс отрицательным при этой операции?
 	account.Balance.Kopecks -= kopecks
 	ps.destructionAccount.Balance.Kopecks += kopecks
 
@@ -54,7 +55,7 @@ func (ps *PaymentSystem) getAccount(iban string) (*Account, bool) {
 }
 
 func (ps *PaymentSystem) CreateBaseAccountAndGetIban(name string) string {
-	newBaseAccount := ps.createAccount(name, BaseStatus)
+	newBaseAccount := ps.createAccount(name, BASE_STATUS)
 	return newBaseAccount.Iban
 }
 
@@ -102,7 +103,7 @@ func (ps *PaymentSystem) TransferMoney(senderAccountIban, receiverAccountIban st
 func (ps *PaymentSystem) TransferMoneyJSON(requestJSON string) error {
 	var request TransferRequest
 	if err := json.Unmarshal([]byte(requestJSON), &request); err != nil {
-		return fmt.Errorf("error parsing json JSON: %w", err)
+		return fmt.Errorf("error parsing json: %w", err)
 	}
 
 	if err := ps.TransferMoney(request.SenderIban, request.ReceiverIban, request.Money.Kopecks); err != nil {
@@ -114,8 +115,8 @@ func (ps *PaymentSystem) TransferMoneyJSON(requestJSON string) error {
 
 func (ps *PaymentSystem) ListAccounts() (string, error) {
 	accounts := make([]*Account, 0, len(ps.accounts))
-	for _, acc := range ps.accounts {
-		accounts = append(accounts, acc)
+	for _, account := range ps.accounts {
+		accounts = append(accounts, account)
 	}
 
 	result, err := json.Marshal(accounts)

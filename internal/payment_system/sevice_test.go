@@ -34,7 +34,7 @@ func Test_CreateAccount(t *testing.T) {
 func Test_DestroyMoney(t *testing.T) {
 	ps := NewPaymentSystem()
 
-	account := ps.createAccount("test", BaseStatus)
+	account := ps.createAccount("test", BASE_STATUS)
 
 	initBalance := 1042
 	account.Balance.Kopecks = initBalance
@@ -53,10 +53,10 @@ func Test_DestroyMoney(t *testing.T) {
 func Test_TransferMoney(t *testing.T) {
 	ps := NewPaymentSystem()
 
-	senderAccount := ps.createAccount("sender", BaseStatus)
+	senderAccount := ps.createAccount("sender", BASE_STATUS)
 	addKopecks := 5537
 	senderAccount.Balance.Kopecks = addKopecks
-	receiverAccount := ps.createAccount("receiver", BaseStatus)
+	receiverAccount := ps.createAccount("receiver", BASE_STATUS)
 	transferKopecks := 214
 
 	err := ps.TransferMoney(senderAccount.Iban, receiverAccount.Iban, transferKopecks)
@@ -85,10 +85,10 @@ func Test_TransferMoney(t *testing.T) {
 func Test_TransferMoneyJSON(t *testing.T) {
 	ps := NewPaymentSystem()
 
-	senderAccount := ps.createAccount("sender", BaseStatus)
+	senderAccount := ps.createAccount("sender", BASE_STATUS)
 	addKopecks := 5000
 	senderAccount.Balance.Kopecks = addKopecks
-	receiverAccount := ps.createAccount("receiver", BaseStatus)
+	receiverAccount := ps.createAccount("receiver", BASE_STATUS)
 
 	requestJson := fmt.Sprintf("{\"sender_iban\": \"%s\",\"receiver_iban\": \"%s\",\"money\": \"5.75\"}", senderAccount.Iban, receiverAccount.Iban)
 
@@ -99,7 +99,7 @@ func Test_TransferMoneyJSON(t *testing.T) {
 func TestPaymentSystem_ListAccounts(t *testing.T) {
 	ps := NewPaymentSystem()
 
-	account := ps.createAccount("test", BaseStatus)
+	account := ps.createAccount("test", BASE_STATUS)
 	account.Balance.Kopecks = 100
 
 	accountsString, err := ps.ListAccounts()

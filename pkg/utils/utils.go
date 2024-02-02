@@ -2,7 +2,7 @@ package utils
 
 import "math/rand"
 
-func GenerateRandomSequence(length int) string {
+func GenerateRandomNumberSequence(length int) string {
 	const digits = "0123456789"
 	result := make([]byte, length)
 
